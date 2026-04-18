@@ -20,3 +20,5 @@ models:
       - name: event_timestamp
         data_tests:
           - not_null
+      - name: is_late
+        description: "True if event arrived >5 min after it occurred (kafka_timestamp - event_timestamp). Used for data quality monitoring."

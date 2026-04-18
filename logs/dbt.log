@@ -1,0 +1,32 @@
+[0m22:53:59.271682 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109690f10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b0f92a0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b0f9390>]}
+
+
+============================== 22:53:59.273857 | cfcfc56e-95aa-4d41-bfda-8cd89c2f158c ==============================
+[0m22:53:59.273857 [info ] [MainThread]: Running with dbt=1.11.8
+[0m22:53:59.274143 [debug] [MainThread]: running dbt with arguments {'indirect_selection': 'eager', 'version_check': 'True', 'introspect': 'True', 'fail_fast': 'False', 'profiles_dir': '/Users/ayomideabass/.dbt', 'static_parser': 'True', 'send_anonymous_usage_stats': 'True', 'log_cache_events': 'False', 'warn_error': 'None', 'empty': 'False', 'target_path': 'None', 'debug': 'False', 'log_path': 'logs', 'quiet': 'False', 'partial_parse': 'True', 'log_format': 'default', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_experimental_parser': 'False', 'printer_width': '80', 'cache_selected_only': 'False', 'no_print': 'None', 'write_json': 'True', 'invocation_command': 'dbt run --select stg_events', 'use_colors': 'True'}
+[0m22:53:59.274472 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/ayomideabass/Documents/Projects/pulse/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m22:53:59.281902 [debug] [MainThread]: Resource report: {"command_name": "run", "command_success": false, "command_wall_clock_time": 0.046060167, "process_in_blocks": "0", "process_kernel_time": 0.126061, "process_mem_max_rss": "112476160", "process_out_blocks": "0", "process_user_time": 0.558528}
+[0m22:53:59.282179 [debug] [MainThread]: Command `dbt run` failed at 22:53:59.282131 after 0.05 seconds
+[0m22:53:59.282368 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109690f10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b0f8520>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10b0f95d0>]}
+[0m22:53:59.282585 [debug] [MainThread]: Flushing usage events
+[0m22:54:00.534881 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m22:54:01.249221 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10753ceb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1106fd390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1106fd480>]}
+
+
+============================== 22:54:01.251021 | 8987c88c-05f4-490b-91c5-660c5632cd08 ==============================
+[0m22:54:01.251021 [info ] [MainThread]: Running with dbt=1.11.8
+[0m22:54:01.251301 [debug] [MainThread]: running dbt with arguments {'use_experimental_parser': 'False', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'use_colors': 'True', 'warn_error': 'None', 'debug': 'False', 'invocation_command': 'dbt test --select stg_events', 'log_path': 'logs', 'empty': 'None', 'cache_selected_only': 'False', 'indirect_selection': 'eager', 'target_path': 'None', 'send_anonymous_usage_stats': 'True', 'log_format': 'default', 'static_parser': 'True', 'profiles_dir': '/Users/ayomideabass/.dbt', 'quiet': 'False', 'introspect': 'True', 'no_print': 'None', 'write_json': 'True', 'fail_fast': 'False', 'version_check': 'True', 'log_cache_events': 'False', 'printer_width': '80', 'partial_parse': 'True'}
+[0m22:54:01.251562 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /Users/ayomideabass/Documents/Projects/pulse/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m22:54:01.252639 [debug] [MainThread]: Resource report: {"command_name": "test", "command_success": false, "command_wall_clock_time": 0.034485042, "process_in_blocks": "0", "process_kernel_time": 0.065902, "process_mem_max_rss": "115113984", "process_out_blocks": "0", "process_user_time": 0.545478}
+[0m22:54:01.252847 [debug] [MainThread]: Command `dbt test` failed at 22:54:01.252811 after 0.03 seconds
+[0m22:54:01.252997 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10753ceb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1106fc610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1106fd6c0>]}
+[0m22:54:01.253145 [debug] [MainThread]: Flushing usage events
+[0m22:54:02.266553 [debug] [MainThread]: An error was encountered while trying to flush usage events

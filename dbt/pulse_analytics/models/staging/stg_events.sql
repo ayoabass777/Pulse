@@ -44,6 +44,14 @@ select
     event_timestamp,        -- business time: "when did this happen?"
     kafka_timestamp,        -- ingestion time: watermark / freshness checks
 
+    -- Late data detection
+    -- Event is "late" if it arrived >5 min after it occurred
+    -- Useful for monitoring data quality in streaming pipelines
+    case
+        when kafka_timestamp - event_timestamp > interval '5 minutes' then true
+        else false
+    end as is_late,
+
     -- Audit (optional — drop if not needed downstream)
     created_at
 
