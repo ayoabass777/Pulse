@@ -1,0 +1,47 @@
+version: 2
+
+sources:
+  - name: raw
+    description: Raw events from Kafka consumer
+    database: pulse
+    schema: raw
+    tables:
+      - name: events
+        description: |
+          Raw clickstream events written by the Kafka consumer.
+          Idempotent: event_id is unique, duplicates rejected via ON CONFLICT.
+        freshness:
+          warn_after: {count: 1, period: hour}
+          error_after: {count: 6, period: hour}
+        loaded_at_field: kafka_timestamp
+        columns:
+          - name: event_id
+            description: "Idempotent key: user_id + kafka_timestamp_ms"
+            data_tests:
+              - unique
+              - not_null
+          - name: event_type
+            description: "Event type (page_view, product_view, add_to_cart, etc.)"
+            data_tests:
+              - not_null
+              - accepted_values:
+                  values: ['page_view', 'product_view', 'search', 'add_to_cart', 'remove_from_cart', 'checkout', 'payment', 'button_click', 'form_submit', 'video_play']
+          - name: user_id
+            description: "UUID identifying the user"
+            data_tests:
+              - not_null
+          - name: event_timestamp
+            description: "Business time — when the event happened"
+            data_tests:
+              - not_null
+          - name: kafka_timestamp
+            description: "Broker ingestion time — watermark source for dbt"
+            data_tests:
+              - not_null
+          - name: funnel_step_index
+            description: "0-4 mapping: page_view(0), product_view(1), add_to_cart(2), checkout(3), payment(4)"
+            data_tests:
+              - accepted_values:
+                  values: [0, 1, 2, 3, 4]
+                  config:
+                    where: "funnel_step_index IS NOT NULL"

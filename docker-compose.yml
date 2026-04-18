@@ -1,0 +1,84 @@
+services:
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    hostname: kafka
+    container_name: pulse_kafka
+    ports:
+      - "29092:29092"
+      - "9092:9092"
+      - "9093:9093"
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENERS: PLAINTEXT_DOCKER://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:29092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_DOCKER://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT_DOCKER:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_DOCKER
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      CLUSTER_ID: "${CLUSTER_ID}"
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    networks:
+      - pulse_network
+    healthcheck:
+      test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgres:
+    image: postgres:latest
+    container_name: pulse_postgres
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./sql/00_create_metabase_db.sql:/docker-entrypoint-initdb.d/00_create_metabase_db.sql
+      - ./sql/create_raw_events.sql:/docker-entrypoint-initdb.d/01_create_raw_events.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5433:5432"
+    networks:
+      - pulse_network
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: pulse_metabase
+    ports:
+      - "3000:3000"
+    environment:
+      # Use Postgres for Metabase's internal database (optional but recommended)
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: metabase
+      MB_DB_PORT: 5432
+      MB_DB_USER: ${DB_USER}
+      MB_DB_PASS: ${DB_PASSWORD}
+      MB_DB_HOST: postgres
+    volumes:
+      - metabase_data:/metabase-data
+    networks:
+      - pulse_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  kafka_data:
+  pg_data:
+  metabase_data:
+
+networks:
+  pulse_network:
+    name: pulse_network

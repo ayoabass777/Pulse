@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_events
+    description: |
+      Cleaned events from raw.events. Consumer guarantees uniqueness,
+      so no dedup applied here. Stable contract for downstream models.
+    columns:
+      - name: event_id
+        description: "Primary key — idempotent from consumer"
+        data_tests:
+          - unique
+          - not_null
+      - name: user_id
+        data_tests:
+          - not_null
+      - name: event_type
+        data_tests:
+          - not_null
+      - name: event_timestamp
+        data_tests:
+          - not_null

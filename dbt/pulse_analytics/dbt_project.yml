@@ -1,0 +1,27 @@
+name: 'pulse_analytics'
+version: '1.0.0'
+
+profile: 'pulse_analytics'
+
+model-paths: ["models"]
+test-paths: ["tests"]
+analysis-paths: ["analyses"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  pulse_analytics:
+    staging:
+      +schema: stg
+      +materialized: view
+    intermediate:
+      +schema: int
+      +materialized: view
+    marts:
+      +schema: mart
+      +materialized: table

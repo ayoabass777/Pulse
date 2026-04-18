@@ -1,0 +1,41 @@
+version: 2
+
+models:
+  - name: mart_session_metrics
+    description: |
+      One row per session. Includes duration, event count, bounce flag,
+      conversion status, and exit funnel step.
+    columns:
+      - name: session_id
+        description: "Primary key"
+        data_tests:
+          - unique
+          - not_null
+      - name: duration_seconds
+        data_tests:
+          - not_null
+
+  - name: mart_funnel_conversion
+    description: |
+      Daily funnel metrics. Shows user counts at each funnel step
+      and step-over-step conversion rates.
+    columns:
+      - name: event_date
+        description: "Primary key"
+        data_tests:
+          - unique
+          - not_null
+
+  - name: mart_daily_active_users
+    description: |
+      Daily/Weekly/Monthly active users with stickiness metric.
+      WAU and MAU use rolling windows (7 and 30 days).
+    columns:
+      - name: activity_date
+        description: "Primary key"
+        data_tests:
+          - unique
+          - not_null
+      - name: dau
+        data_tests:
+          - not_null

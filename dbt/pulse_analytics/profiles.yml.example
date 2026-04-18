@@ -1,0 +1,15 @@
+# Pulse Analytics — dbt profile (local development)
+# Copy to ~/.dbt/profiles.yml or merge with existing profiles
+
+pulse_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: "{{ env_var('PULSE_DB_USER', 'pulse') }}"
+      password: "{{ env_var('PULSE_DB_PASSWORD', 'pulse') }}"
+      dbname: pulse
+      schema: raw
+      threads: 4
