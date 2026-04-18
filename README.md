@@ -2,7 +2,7 @@
 
 A streaming session analytics pipeline. Simulated clickstream events flow through Kafka into Postgres, where dbt transforms them into session metrics, funnel conversion rates, and user engagement analytics.
 
-![Sessions Dashboard](docs/images/Screenshot%202026-04-18%20at%201.13.51%20AM.png)
+![Sessions Dashboard](docs/images/01_sessions.png)
 
 ## Architecture
 
@@ -30,20 +30,20 @@ A streaming session analytics pipeline. Simulated clickstream events flow throug
 ## Dashboards
 
 ### Sessions Overview
-![Sessions](docs/images/Screenshot%202026-04-18%20at%201.13.51%20AM.png)
+![Sessions](docs/images/01_sessions.png)
 - Sessions over time
 - Average session duration
 - Bounce rate
 - Sessions by landing page
 
 ### Funnel Analysis
-![Funnel](docs/images/Screenshot%202026-04-18%20at%201.14.38%20AM.png)
+![Funnel](docs/images/02_funnel.png)
 - Step-by-step conversion waterfall
 - Overall conversion rate
 - Conversion trend over time
 
 ### User Engagement
-![Engagement](docs/images/Screenshot%202026-04-18%20at%201.18.52%20AM.png)
+![Engagement](docs/images/03_engagement.png)
 - DAU/WAU/MAU trends
 - Stickiness (DAU/MAU ratio)
 - Current active user counts
